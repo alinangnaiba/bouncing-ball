@@ -1,5 +1,6 @@
 ﻿using BouncingBall.GameObjects.Contract;
 using BouncingBall.Helper;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,16 +12,22 @@ namespace BouncingBall.GameObjects
     {
         private List<Position> location = new List<Position>();
         private IGameObject _wall;
+        private readonly int _maxHeight;
+        private readonly int _maxWidth;
 
         public Ball(int x, int y, IGameObject wall)
         {
             location.Add(new Position(x, y));
             _wall = wall;
+            _maxWidth = Console.BufferWidth - 2;
+            _maxHeight = Console.BufferHeight - 2;
         }
 
         public void Bounce()
         {
             var direction = new Position(-1, -1);
+            //Add random direction
+            //Ball direction should be either NE, NW, SW, SE
             
             ConsoleWriter.Display("\u2588", location.First(), Color.Red);
             
@@ -40,11 +47,11 @@ namespace BouncingBall.GameObjects
 
                 ConsoleWriter.Display("\u2588", newLoc, Color.Red);
 
-                if (newLoc.X == 1 || newLoc.X == 118 || HasVerticalCollision(location, _wall.GetLocation()))
+                if (newLoc.X == 1 || newLoc.X == _maxWidth || HasVerticalCollision(location, _wall.GetLocation()))
                 {
                     direction.X = -direction.X;
                 }
-                if (newLoc.Y == 1 || newLoc.Y == 28 || HasHorizontalCollision(location, _wall.GetLocation()))
+                if (newLoc.Y == 1 || newLoc.Y == _maxHeight || HasHorizontalCollision(location, _wall.GetLocation()))
                 {
                     direction.Y = -direction.Y;
                 }
@@ -59,17 +66,6 @@ namespace BouncingBall.GameObjects
                 (t.X == currLoc.X + 1 && t.Y == currLoc.Y)
                 ).FirstOrDefault();
 
-            //edge case
-            if (collision == null)
-            {
-                //check left or right future position for possible collission
-                collision = target.Where(t => 
-                t.X == currLoc.X + 1 && t.Y == currLoc.Y + 1 ||
-                t.X == currLoc.X - 1 && t.Y == currLoc.Y + 1 ||
-                //t.X == currLoc.X + 1 && t.Y == currLoc.Y - 1 ||
-                t.X == currLoc.X - 1 && t.Y == currLoc.Y - 1
-                ).FirstOrDefault();
-            }
             return collision != null;
         }
 
@@ -78,11 +74,17 @@ namespace BouncingBall.GameObjects
             var currLoc = myObj.First();
             var collision = target.Where(t =>
             (t.X == currLoc.X && t.Y == currLoc.Y + 1) ||
-            (t.X == currLoc.X && t.Y == currLoc.Y - 1)
-           
-            ).FirstOrDefault();
+            (t.X == currLoc.X && t.Y == currLoc.Y - 1)).ToList();
 
-            return collision != null;
+            //edge case
+            var edgeCollision = target.Where(t =>
+                t.X == currLoc.X + 1 && t.Y == currLoc.Y - 1 ||
+                t.X == currLoc.X - 1 && t.Y == currLoc.Y - 1 ||
+                t.X == currLoc.X + 1 && t.Y == currLoc.Y + 1 ||
+                t.X == currLoc.X - 1 && t.Y == currLoc.Y + 1
+                ).ToList();
+            var hasEdgeCollision = !collision.Any() && edgeCollision.Count == 1;
+            return collision.Any() || hasEdgeCollision;
         }
 
         public List<Position> GetLocation()

@@ -7,12 +7,12 @@ namespace BouncingBall.GameObjects
 {
     public class Border
     {
-        private readonly int _width;
-        private readonly int _height;
+        private readonly int _maxWidth;
+        private readonly int _maxHeight;
         public Border(int width, int height)
         {
-            _width = width;
-            _height = height;
+            _maxWidth = width - 1;
+            _maxHeight = height - 1;
         }
 
         public void CreateBorder()
@@ -20,17 +20,17 @@ namespace BouncingBall.GameObjects
             var borderWall = new List<Position>();
 
             //top and bottom border
-            for(int i = 0; i < 120; i++)
+            for(int i = 0; i <= _maxWidth; i++)
             {
                 borderWall.Add(new Position(i, 0));
-                borderWall.Add(new Position(i, 29));
+                borderWall.Add(new Position(i, _maxHeight));
             }
 
             //side border
-            for(int j = 1; j < 29; j++)
+            for(int j = 1; j < _maxHeight; j++)
             {
                 borderWall.Add(new Position(0, j));
-                borderWall.Add(new Position(119, j));
+                borderWall.Add(new Position(_maxWidth, j));
             }
             RenderBorder(borderWall);
         }

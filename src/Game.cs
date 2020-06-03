@@ -10,12 +10,15 @@ namespace BouncingBall
         {
             Console.Title = "Bouncing Ball";
             Console.CursorVisible = false;
+            Console.SetWindowSize(90, 30);
+            Console.BufferHeight = 30;
+            Console.BufferWidth = 90;
             int height = Console.BufferHeight;
             int width = Console.BufferWidth;
             var border = new Border(width, height);
             border.CreateBorder();
-            var wall = new Wall(40, 12);
-            var ball = new Ball(20, 20, wall);
+            var wall = new Wall(60, 12);
+            var ball = new Ball(45, 15, wall);
 
             var moveThread = new Thread(new ThreadStart(ball.Bounce));
             moveThread.IsBackground = true;

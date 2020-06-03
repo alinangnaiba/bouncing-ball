@@ -10,10 +10,15 @@ namespace BouncingBall.GameObjects
     public class Wall : IGameObject
     {
         private readonly List<Position> section = new List<Position>();
+        private readonly int _maxHeight;
+        private readonly int _maxWidth;
 
         public Wall(int x, int y)
         {
             section.Add(new Position(x, y));
+            _maxHeight = Console.BufferHeight - 2;
+            _maxWidth = Console.BufferWidth - 2;
+
         }
 
         public void Build()
@@ -47,7 +52,7 @@ namespace BouncingBall.GameObjects
                         lastWall = section.Last();
                         y = lastWall.Y + 1;
                         newWall = new Position(lastWall.X, y);
-                        if (lastWall.Y < 28 && !IsInList(section, newWall))
+                        if (lastWall.Y < _maxHeight && !IsInList(section, newWall))
                         {
                             section.Add(newWall);
                         }
@@ -65,7 +70,7 @@ namespace BouncingBall.GameObjects
                         lastWall = section.Last();
                         x = lastWall.X + 1;
                         newWall = new Position(x, lastWall.Y);
-                        if (lastWall.X < 118 && !IsInList(section, newWall))
+                        if (lastWall.X < _maxWidth && !IsInList(section, newWall))
                         {
                             section.Add(newWall);
                         }
