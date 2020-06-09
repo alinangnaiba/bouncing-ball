@@ -25,16 +25,14 @@ namespace BouncingBall.GameObjects
 
         public void Bounce()
         {
-            var direction = new Position(-1, -1);
-            //Add random direction
-            //Ball direction should be either NE, NW, SW, SE
+            var direction = GetDirection();
             
             ConsoleWriter.Display("\u2588", location.First(), Color.Red);
-            
+
             while (true)
             {
                 var currentLoc = location.First();
-                
+
                 int x = currentLoc.X + direction.X;
                 int y = currentLoc.Y + direction.Y;
                 var newLoc = new Position(x, y);
@@ -91,5 +89,21 @@ namespace BouncingBall.GameObjects
         {
             return location;
         }
+
+        private Position GetDirection()
+        {
+            var rand = new Random();
+            int n = rand.Next(0, 4);
+
+            return Direction[n];
+        }
+
+        private Position[] Direction => new Position[]
+        {
+            new Position(-1, -1),
+            new Position(1, -1),
+            new Position(1, 1),
+            new Position(-1, 1),
+        };
     }
 }
