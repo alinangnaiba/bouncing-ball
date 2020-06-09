@@ -13,12 +13,11 @@ namespace BouncingBall.GameObjects
         private readonly int _maxHeight;
         private readonly int _maxWidth;
 
-        public Wall(int x, int y)
+        public Wall(int x, int y, int width, int height)
         {
             section.Add(new Position(x, y));
-            _maxHeight = Console.BufferHeight - 2;
-            _maxWidth = Console.BufferWidth - 2;
-
+            _maxHeight = height - 2;
+            _maxWidth = width - 2;
         }
 
         public void Build()
