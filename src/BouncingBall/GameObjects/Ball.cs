@@ -74,15 +74,14 @@ namespace BouncingBall.GameObjects
             (t.X == currLoc.X && t.Y == currLoc.Y + 1) ||
             (t.X == currLoc.X && t.Y == currLoc.Y - 1)).ToList();
 
-            //edge case
-            //var edgeCollision = target.Where(t =>
-            //    t.X == currLoc.X + 1 && t.Y == currLoc.Y - 1 ||
-            //    t.X == currLoc.X - 1 && t.Y == currLoc.Y - 1 ||
-            //    t.X == currLoc.X + 1 && t.Y == currLoc.Y + 1 ||
-            //    t.X == currLoc.X - 1 && t.Y == currLoc.Y + 1
-            //    ).ToList();
-            //var hasEdgeCollision = !collision.Any() && edgeCollision.Count == 1;
-            return collision.Any(); //|| hasEdgeCollision;
+            var edgeCollision = target.Where(t =>
+                t.X == currLoc.X + 1 && t.Y == currLoc.Y - 1 ||
+                t.X == currLoc.X - 1 && t.Y == currLoc.Y - 1 ||
+                t.X == currLoc.X + 1 && t.Y == currLoc.Y + 1 ||
+                t.X == currLoc.X - 1 && t.Y == currLoc.Y + 1
+                ).ToList();
+            var hasEdgeCollision = !collision.Any() && edgeCollision.Count == 1;
+            return collision.Any() || hasEdgeCollision;
         }
 
         public List<Position> GetLocation()

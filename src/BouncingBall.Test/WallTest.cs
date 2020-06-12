@@ -14,9 +14,9 @@ namespace BouncingBall.Test
         {
             int height = 30;
             int width = 90;
-            var wallTest = new Wall(40, 40, height, width);
+            var wallTest = new Wall(47, 12, height, width);
 
-            var positions = new List<Position> { new Position(40, 40) };
+            var positions = new List<Position> { new Position(47, 12) };
 
             Assert.AreEqual(positions.Count, wallTest.GetLocation().Count);
         }
@@ -26,9 +26,9 @@ namespace BouncingBall.Test
         {
             int height = 30;
             int width = 90;
-            var wallTest = new Wall(40, 40, height, width);
+            var wallTest = new Wall(47, 12, height, width);
 
-            var positions = new List<Position> { new Position(40, 40) };
+            var positions = new List<Position> { new Position(47, 12) };
 
             Assert.AreEqual(positions.First().X, wallTest.GetLocation().First().X);
             Assert.AreEqual(positions.First().Y, wallTest.GetLocation().First().Y);
