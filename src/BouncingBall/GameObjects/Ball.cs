@@ -15,26 +15,24 @@ namespace BouncingBall.GameObjects
         private readonly int _maxHeight;
         private readonly int _maxWidth;
 
-        public Ball(int x, int y, IGameObject wall)
+        public Ball(int x, int y, IGameObject wall, int width, int height)
         {
             location.Add(new Position(x, y));
             _wall = wall;
-            _maxWidth = Console.BufferWidth - 2;
-            _maxHeight = Console.BufferHeight - 2;
+            _maxWidth = width - 2;
+            _maxHeight = height - 2;
         }
 
         public void Bounce()
         {
-            var direction = new Position(-1, -1);
-            //Add random direction
-            //Ball direction should be either NE, NW, SW, SE
+            var direction = GetDirection();
             
             ConsoleWriter.Display("\u2588", location.First(), Color.Red);
-            
+
             while (true)
             {
                 var currentLoc = location.First();
-                
+
                 int x = currentLoc.X + direction.X;
                 int y = currentLoc.Y + direction.Y;
                 var newLoc = new Position(x, y);
@@ -76,7 +74,6 @@ namespace BouncingBall.GameObjects
             (t.X == currLoc.X && t.Y == currLoc.Y + 1) ||
             (t.X == currLoc.X && t.Y == currLoc.Y - 1)).ToList();
 
-            //edge case
             var edgeCollision = target.Where(t =>
                 t.X == currLoc.X + 1 && t.Y == currLoc.Y - 1 ||
                 t.X == currLoc.X - 1 && t.Y == currLoc.Y - 1 ||
@@ -91,5 +88,21 @@ namespace BouncingBall.GameObjects
         {
             return location;
         }
+
+        private Position GetDirection()
+        {
+            var rand = new Random();
+            int n = rand.Next(0, 4);
+
+            return Direction[n];
+        }
+
+        private Position[] Direction => new Position[]
+        {
+            new Position(-1, -1),
+            new Position(1, -1),
+            new Position(1, 1),
+            new Position(-1, 1),
+        };
     }
 }

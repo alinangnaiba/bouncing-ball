@@ -17,8 +17,8 @@ namespace BouncingBall
             int width = Console.BufferWidth;
             var border = new Border(width, height);
             border.CreateBorder();
-            var wall = new Wall(60, 12);
-            var ball = new Ball(45, 15, wall);
+            var wall = new Wall(47, 12, width, height);
+            var ball = new Ball(45, 15, wall, width, height);
 
             var moveThread = new Thread(new ThreadStart(ball.Bounce));
             moveThread.IsBackground = true;

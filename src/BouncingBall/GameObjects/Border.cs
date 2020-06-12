@@ -1,5 +1,4 @@
 ﻿using BouncingBall.Helper;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -32,10 +31,10 @@ namespace BouncingBall.GameObjects
                 borderWall.Add(new Position(0, j));
                 borderWall.Add(new Position(_maxWidth, j));
             }
-            RenderBorder(borderWall);
+            Display(borderWall);
         }
 
-        private void RenderBorder(List<Position> borderWall)
+        private void Display(List<Position> borderWall)
         {
             foreach(var section in borderWall)
             {
