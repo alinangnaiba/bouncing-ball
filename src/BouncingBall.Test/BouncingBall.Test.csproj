@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\BouncingBall.csproj" />
+    <ProjectReference Include="..\BouncingBall\BouncingBall.csproj" />
   </ItemGroup>
 
 </Project>
